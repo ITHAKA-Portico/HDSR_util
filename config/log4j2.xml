@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<log4j:configuration xmlns:log4j="http://portico.org/log4j/">
+
+<appenders> 
+  <Console name="console" target="SYSTEM_OUT">
+  	<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+  </Console>
+  <File name="logfile" fileName="logs/HDSR.log">
+  	<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+   </File>
+   
+   <RollingFile name="HDSRRollingFileAppender" fileName="logs/hdsr.log"
+      filePattern="logs/hdsr-%d{MM-dd-yyyy}-%i.log">
+        <PatternLayout>
+            <Pattern>%d [%t] %p %c - %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <OnStartupTriggeringPolicy />
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="50 MB" />
+        </Policies>
+        <DefaultRolloverStrategy max="20" />
+   </RollingFile>
+   <RollingFile name="HDSRRollingErrorAppender" fileName="logs/hdsr-error.log"
+      filePattern="logs/hdsr-error-%d{MM-dd-yyyy}-%i.log">
+      	<LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout>
+            <Pattern>%d [%t] %p %c (%F:%L) - %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <OnStartupTriggeringPolicy />
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="50 MB" />
+        </Policies>
+        <DefaultRolloverStrategy max="20" />
+    </RollingFile>
+    
+ </appenders>
+ 
+ 
+ <loggers>
+	<logger name="org.portico.hdsr.HDSRContentChecker" level="trace" additivity="false">
+		<appender-ref ref="logfile" level="debug"/>
+		<appender-ref ref="console" level="trace"/>
+	</logger>
+	
+	<root level="trace">
+	  <appender-ref ref="logfile"/>
+	  <appender-ref ref="console"/>
+	</root>
+	
+	<logger name="org.portico.hdsr.HDSRIssue" level="trace" additivity="false">
+		<appender-ref ref="logfile" level="trace"/>
+		<appender-ref ref="console" level="trace"/>
+	</logger>
+
+	<logger name="org.portico.hdsr.HDSRArticle" level="trace" additivity="false">
+		<appender-ref ref="logfile" level="trace"/>
+		<appender-ref ref="console" level="trace"/>
+	</logger>
+	
+	<logger name="org.portico.hdsr.Indexer" level="trace" additivity="false">
+		<appender-ref ref="logfile" level="trace"/>
+		<appender-ref ref="console" level="trace"/>
+	</logger>
+
+		
+	<logger name="org.portico.hdsr.Utility" level="trace" additivity="false">
+		<appender-ref ref="logfile" level="trace"/>
+		<appender-ref ref="console" level="trace"/>
+	</logger>
+	
+	<logger name="org.portico.warc.Index" level="trace" additivity="false">
+		<appender-ref ref="logfile" level="trace"/>
+		<appender-ref ref="console" level="trace"/>
+	</logger>
+	
+	<logger name="com.mchange.v2.c3p0">
+    	<level value="SEVERE"/>
+	</logger>
+	
+	
+</loggers>
+
+</log4j:configuration>
